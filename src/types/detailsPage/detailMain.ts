@@ -23,3 +23,7 @@ export interface KitsuDetails {
   };
   included?: { id: string; type: string; attributes: { name?: string } }[];
 }
+
+export interface MangaReadSectionProps {
+  title: string;
+}
