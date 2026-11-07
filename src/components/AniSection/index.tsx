@@ -6,7 +6,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import type { IProps, Title } from "@/types/mainPage/kitsu";
+import type { IProps, Title } from "../../types/mainPage/kitsu";
 import AnimeCard from "../aniCard";
 
 const AniSection = ({ heading, data, isLoading, isError }: IProps) => {
@@ -36,7 +36,7 @@ const AniSection = ({ heading, data, isLoading, isError }: IProps) => {
   }, [emblaApi, update]);
 
   const btn =
-    "absolute top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-md " +
+    "absolute top-1/2 z-10 hidden size-10 -translate-y-1/2 place-items-center rounded-md sm:grid " +
     "border-[1.5px] border-ink bg-paper text-ink transition " +
     "hover:bg-ink hover:text-paper disabled:pointer-events-none disabled:opacity-0";
 
@@ -45,9 +45,11 @@ const AniSection = ({ heading, data, isLoading, isError }: IProps) => {
     : [];
 
   return (
-    <section className="flex flex-col min-w-0 gap-4 px-10">
-      <div className="flex items-end justify-between">
-        <h3 className="font-serif text-[22px] font-bold">{heading}</h3>
+    <section className="flex min-w-0 flex-col gap-3 px-4 sm:gap-4 sm:px-6 lg:px-10">
+      <div className="flex items-end justify-between gap-3">
+        <h3 className="font-serif text-xl font-bold sm:text-[22px]">
+          {heading}
+        </h3>
         <p className="border-b-[1.5px] border-accent text-sm font-semibold text-accent">
           All
         </p>
@@ -58,12 +60,18 @@ const AniSection = ({ heading, data, isLoading, isError }: IProps) => {
           <div className="-ml-4 flex">
             {isLoading
               ? Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="min-w-0 flex-[0_0_165px] pl-4">
-                    <div className="h-51 animate-pulse rounded bg-ink/10" />
+                  <div
+                    key={i}
+                    className="min-w-0 flex-[0_0_140px] pl-4 sm:flex-[0_0_165px]"
+                  >
+                    <div className="aspect-165/204 animate-pulse rounded bg-ink/10" />
                   </div>
                 ))
               : unique.map((a) => (
-                  <div key={a.id} className="min-w-0 flex-[0_0_165px] pl-4">
+                  <div
+                    key={a.id}
+                    className="min-w-0 flex-[0_0_140px] pl-4 sm:flex-[0_0_165px]"
+                  >
                     <AnimeCard title={a} />
                   </div>
                 ))}

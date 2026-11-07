@@ -1,5 +1,4 @@
-import React from "react";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import Sidebar from "../../components/Sidebar";
 
 export default function RootLayout({
@@ -9,14 +8,16 @@ export default function RootLayout({
 }) {
   return (
     <div
-      className="w-full h-full font-sans bg-paper grid md:grid-cols-[minmax(0,0.2fr)_minmax(0,0.8fr)]
-      lg:grid-cols-[minmax(0,0.15fr)_minmax(0,0.85fr)]"
+      className="flex min-h-dvh w-full flex-col bg-paper font-sans
+      md:grid md:grid-cols-[240px_1fr] md:grid-rows-[auto]
+      lg:grid-cols-[280px_1fr]"
     >
-      <Suspense fallback={<p>Loading search…</p>}>
+      <Suspense fallback={<div className="p-4">Loading search…</div>}>
         <Sidebar />
       </Suspense>
-
-      <main className="min-w-0 flex-1 px-9">{children}</main>
+      <main className="min-w-0 flex-1 py-2 pb-[calc(4.75rem+env(safe-area-inset-bottom))] md:pb-2">
+        {children}
+      </main>
     </div>
   );
 }

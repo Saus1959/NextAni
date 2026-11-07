@@ -17,4 +17,5 @@ export interface IUndrlineComponent {
   positionX: string;
   positionY: string;
   rounded?: boolean;
+  selected?: boolean;
 }

@@ -26,6 +26,7 @@ export interface Title {
   poster: string | null;
   score: string | null; // "8.3"
   year: string | null;
+  status?: string;
 }
 
 export interface IProps {

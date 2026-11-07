@@ -6,6 +6,7 @@ import useApi from "../../../../hook/useApi";
 import { KitsuDetails } from "../../../../types/detailsPage/detailMain";
 import AniTrailer from "../../../../components/AniTrailer";
 import MangaReadSection from "../../../../components/MangaReadSection";
+import StatusDropdown from "../../../../components/statusDropdown";
 
 const RELEASE_STATUS: Record<string, string> = {
   finished: "Finished",
@@ -33,8 +34,8 @@ function DetailsContent() {
 
   if (isLoading) {
     return (
-      <div className="flex gap-10 px-10 py-9">
-        <div className="h-100 w-70 shrink-0 animate-pulse rounded bg-ink/10" />
+      <div className="flex flex-col gap-6 px-4 py-5 sm:px-6 md:flex-row md:gap-10 lg:px-10 lg:py-9">
+        <div className="aspect-[7/10] w-44 shrink-0 animate-pulse rounded bg-ink/10 max-md:mx-auto md:w-70" />
         <div className="flex flex-1 flex-col gap-4">
           <div className="h-4 w-40 animate-pulse rounded bg-ink/10" />
           <div className="h-11 w-2/3 animate-pulse rounded bg-ink/10" />
@@ -46,7 +47,7 @@ function DetailsContent() {
 
   if (isError || !data) {
     return (
-      <div className="flex flex-col items-start gap-4 px-10 py-9">
+      <div className="flex flex-col items-start gap-4 px-4 py-5 sm:px-6 lg:px-10 lg:py-9">
         <p className="text-muted">Failed to load this title.</p>
         <Link href="/" className="text-accent underline">
           Back to home
@@ -87,12 +88,12 @@ function DetailsContent() {
   ).filter((f): f is [string, string | number] => f[1] != null && f[1] !== "");
 
   return (
-    <div className="flex min-w-0 flex-col gap-7 px-10 py-9">
-      <Link href="/" className="self-start text-muted hover:text-accent">
+    <div className="relative flex min-w-0 flex-col gap-5 px-4 py-4 sm:gap-7 sm:px-6 sm:py-6 lg:px-10 lg:py-9">
+      <Link href="/" className="self-start py-1 text-muted hover:text-accent">
         ← Back
       </Link>
-      <div className="flex flex-col gap-10 md:flex-row">
-        <div className="relative h-100 w-70 shrink-0 overflow-hidden rounded bg-ink/10">
+      <div className="flex flex-col gap-6 md:flex-row md:gap-10">
+        <div className="relative aspect-[7/10] w-44 shrink-0 overflow-hidden rounded bg-ink/10 max-md:mx-auto sm:w-56 md:w-70">
           {a.posterImage?.large && (
             <img
               src={a.posterImage.large}
@@ -123,7 +124,7 @@ function DetailsContent() {
           </div>
 
           <div>
-            <h1 className="font-serif text-[44px] font-bold leading-[1.05]">
+            <h1 className="wrap-break-word font-serif text-[28px] font-bold leading-[1.1] sm:text-[36px] lg:text-[44px] lg:leading-[1.05]">
               {a.canonicalTitle}
             </h1>
             {subtitle && (
@@ -132,13 +133,20 @@ function DetailsContent() {
           </div>
 
           {score && (
-            <div className="flex items-center gap-1.5 text-[15px]">
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-3 text-[15px]">
               <span className="text-accent">★</span>
               <b className="font-semibold">{score}</b>
               <span className="text-muted">/ 10</span>
               {a.ratingRank && (
-                <span className="ml-5 text-muted">Rank: #{a.ratingRank}</span>
+                <span className="ml-3 text-muted sm:ml-5">
+                  Rank: #{a.ratingRank}
+                </span>
               )}
+              <StatusDropdown
+                name={"Status"}
+                options={["watching", "in plans", "finished"]}
+                animanga={data}
+              />
             </div>
           )}
 
@@ -158,17 +166,28 @@ function DetailsContent() {
           <p className="max-w-155 text-[15px] leading-relaxed text-[#3A372F]">
             {a.synopsis ?? "No synopsis available yet."}
           </p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-2">
+            {a.youtubeVideoId && (
+              <div className="mt-auto">
+                <a
+                  href="#trailer"
+                  className="flex h-12 w-full items-center justify-center rounded-md bg-ink px-5.5 text-[15px] font-semibold text-paper no-underline transition hover:bg-accent sm:inline-flex sm:w-auto"
+                >
+                  Watch trailer
+                </a>
+              </div>
+            )}
 
-          {a.youtubeVideoId && (
-            <div className="mt-auto">
-              <a
-                href="#trailer"
-                className="inline-flex h-12 items-center rounded-md bg-ink px-5.5 text-[15px] font-semibold text-paper no-underline transition hover:bg-accent"
-              >
-                Watch trailer
-              </a>
-            </div>
-          )}
+            {!score && (
+              <div className="w-full sm:w-auto">
+                <StatusDropdown
+                  name={"Status"}
+                  options={["watching", "in plans", "finished"]}
+                  animanga={data}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
@@ -189,8 +208,10 @@ function DetailsContent() {
                 key={label}
                 className="flex justify-between gap-4 border-b border-[#DDD7C8] py-3 text-sm last:border-0"
               >
-                <dt className="text-muted">{label}</dt>
-                <dd className="text-right font-semibold">{value}</dd>
+                <dt className="shrink-0 text-muted">{label}</dt>
+                <dd className="min-w-0 break-words text-right font-semibold">
+                  {value}
+                </dd>
               </div>
             ))}
           </dl>
