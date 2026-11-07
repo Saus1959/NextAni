@@ -2,6 +2,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
 const PageHeader = ({
   pageName,
@@ -32,11 +34,13 @@ const PageHeader = ({
       </div>
       <label className="flex h-11 w-full shrink-0 items-center gap-2.5 sm:w-64 lg:w-75 rounded-md border-[1.5px] border-ink bg-card px-3.5 text-muted focus-within:border-accent">
         <FontAwesomeIcon icon={faMagnifyingGlass} className="size-4 shrink-0" />
-        <input
-          type="search"
-          placeholder="Search your anime"
-          className="w-full min-w-0 bg-transparent text-base text-ink outline-none placeholder:text-muted sm:text-sm"
-        />
+        <Link href={"/search"}>
+          <input
+            type="search"
+            placeholder="Search your anime"
+            className="w-full min-w-0 bg-transparent text-base text-ink outline-none placeholder:text-muted sm:text-sm"
+          />
+        </Link>
       </label>
     </div>
   );

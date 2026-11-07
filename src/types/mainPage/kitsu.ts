@@ -15,8 +15,8 @@ export interface KitsuItem {
 
 export interface KitsuList {
   data: KitsuItem[];
-  links: { next?: string };
-  meta: { count: number };
+  links?: { next?: string };
+  meta?: { count: number };
 }
 
 export interface Title {

@@ -10,7 +10,7 @@ const AnimeCard = ({ title }: { title: Title }) => {
       href={`/title/${id}?type=${type}`}
       className="group flex flex-col gap-1.5"
     >
-      <div className="relative aspect-[165/204] w-full overflow-hidden rounded bg-ink/10">
+      <div className="relative aspect-165/204 w-full overflow-hidden rounded bg-ink/10">
         {poster && (
           <img
             src={poster}

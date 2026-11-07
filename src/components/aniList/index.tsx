@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
 import AniSection from "../AniSection";
 import useApi from "../../hook/useApi";
 import { toTitle } from "../../Lib/mapTitle";
